@@ -1,0 +1,10 @@
+[
+  {
+    "name": "tutorials",
+    "path": "tutorials.json"
+  },
+  {
+    "name": "Puzzles beta",
+    "path": "first_levels.json"
+  }
+]

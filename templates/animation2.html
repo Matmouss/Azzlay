@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subtle Animated Background</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Pour empêcher le défilement */
+            font-family: 'Didot', sans-serif;
+            background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+        }
+
+        #background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* S'assure que l'animation est en arrière-plan */
+            overflow: hidden;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(200, 200, 200, 0.2);
+            animation: float 10s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+            50% {
+                transform: translateY(-20px) translateX(20px);
+            }
+            100% {
+                transform: translateY(0) translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="background-animation"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const numCircles = 20; // Moins de cercles pour une animation plus sobre
+            const container = document.getElementById('background-animation');
+
+            for (let i = 0; i < numCircles; i++) {
+                const circle = document.createElement('div');
+                circle.classList.add('circle');
+                const size = 50 + Math.random() * 100;
+                circle.style.width = `${size}px`;
+                circle.style.height = `${size}px`;
+                circle.style.top = `${Math.random() * 100}vh`;
+                circle.style.left = `${Math.random() * 100}vw`;
+                circle.style.animationDuration = `${15 + Math.random() * 10}s`;
+                container.appendChild(circle);
+            }
+        });
+    </script>
+</body>
+</html>

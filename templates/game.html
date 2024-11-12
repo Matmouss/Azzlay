@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azzlay - Game</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+</head>
+<body>
+    <div class="preload">
+        <img src="/static/images/player.png" alt="Préchargement image 1">
+        <img src="/static/images/strong.png" alt="Préchargement image 2">
+        <img src="/static/images/core.png" alt="Préchargement image 3">
+        <img src="/static/images/circle.png" alt="Préchargement image 4">
+        <img src="/static/images/triangle.png" alt="Préchargement image 5">
+        <img src="/static/images/square.png" alt="Préchargement image 6">
+        <img src="/static/images/quantum.png" alt="Préchargement image 7">
+        <img src="/static/images/cross.png" alt="Préchargement image 8">
+        <img src="/static/images/dollar.png" alt="Préchargement image 9">
+        <img src="/static/images/wall.png" alt="Préchargement image 10">
+        <img src="/static/images/void.png" alt="Préchargement image 11">
+        <img src="/static/images/circle_overlay.png" alt="Préchargement image 12">
+        <img src="/static/images/triangle_overlay.png" alt="Préchargement image 13">
+        <img src="/static/images/square_overlay.png" alt="Préchargement image 14">
+        <img src="/static/images/quantum_overlay.png" alt="Préchargement image 15">
+    </div>
+    {% include 'deroulant.html' %}
+    {% include 'animation3.html' %}
+    {% include 'banner.html' %}
+    <div id="victory-screen" class="hidden">
+        <h1>Victory!</h1>
+        <p>Congratulations !</p>
+        <div class="counter-container">
+            <span>You finished in </span>
+            <span id="turn-counter" class="turn-counter">0</span>
+            <span> Moves</span>
+        </div>
+        <div class="counter-container">
+            <span>Current best score is  </span>
+            <span id="best-score" class="turn-counter">0</span>
+            <span> Moves</span>
+        </div>
+        <button id="restart-button">Restart</button>
+        {% if next_level == 'back-home' %}
+        <button onclick="window.location.href='{{ url_for('choose_puzzle', world_name=world_name) }}'">Back to Menu</button>
+        {% else %}
+        <button onclick="window.location.href='{{ url_for('start_game', world_name=world_name, puzzle_name=next_level) }}'">Go to next level</button>
+        <button onclick="window.location.href='{{ url_for('choose_puzzle', world_name=world_name) }}'">Back to Menu</button>
+        {% endif %}
+
+        <script>
+            console.log("Next level URL: {{ url_for('start_game', world_name=world_name, puzzle_name=next_level) }}");
+        </script>
+
+    </div>
+    <div class="super-container">
+        <h1 id="level-name" >{{ puzzle_name }}</h1>
+        <div class="game-container">
+            <div class="sidebar">
+                <div class="Inventory">
+                    <h2>Inventory</h2>
+                    <ul id="inventory-list"></ul>
+                </div>
+                    <button onclick="location.reload()">Restart</button>
+                    <button onclick="window.location.href='{{ url_for('choose_puzzle', world_name=world_name) }}'">Back</button>
+            </div>
+            <div id="game-board"></div>
+            <div class="sidebar">
+                <div class="rules">
+                    <h2>Rules</h2>
+                    <ul id="rules-list"></ul>
+                </div>
+                <div class="objectives">
+                    <h2>Objectives</h2>
+                    <ul id="objectives-list"></ul>
+                </div>
+                <div class="counter-container">
+                    <span>Move: </span>
+                    <span id="turn-counter-ingame" class="turn-counter">0</span>
+                </div>
+            </div>
+        </div>
+        <div id="level-text" class="level-text"></div>
+        <button onclick="window.location.href='/'">Back to home</button>
+    </div>
+
+
+    <script>
+        // Connexion au serveur Socket.io
+        const socket = io.connect('http://' + document.domain + ':' + location.port);
+        const gameDataDiv = document.getElementById('game-data');
+
+        // Envoyer un message au backend une fois la page chargée
+        socket.on('connect', () => {
+
+            socket.emit('start');
+
+            // Envoyer un message toutes les secondes
+            setInterval(() => {
+                socket.emit('loop');
+            }, 1000);
+        });
+
+    </script>
+
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
+

@@ -1,0 +1,20 @@
+[
+	{
+		"nb": 1,
+		"name": "",
+		"extra text": "",
+		"size": [],
+		"void cells": [
+		],
+		"starting pieces": [
+		],
+		"initial inventory": {
+		},
+		"available": null,
+		"cursor position": [],
+		"cores positions": [],
+		"goals": [],
+		"rules": [],
+		"best_score": "NA"
+	}
+]

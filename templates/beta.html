@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beta Banner</title>
+    <style>
+        /* Styles de base pour le bandeau */
+        .beta-banner {
+            display: none; /* Masqué par défaut */
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #d3d3d3d2; /* Gris clair */
+            color: #000;
+            text-align: center;
+            padding: 10px;
+            font-family: 'Art Deco', sans-serif; /* Assurez-vous d'avoir une police appropriée */
+            border-top: 2px solid #cccccc4d;
+            z-index: 1000;
+        }
+
+        /* Style pour le bouton de fermeture */
+        .beta-banner button {
+            background-color: #000;
+            color: #d3d3d3;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px;
+            font-family: 'Art Deco', sans-serif; /* Assurez-vous d'avoir une police appropriée */
+        }
+
+        .beta-banner button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="beta-banner" id="betaBanner">
+        <span>This game is currently in beta. Some features may not work as expected.</span>
+        <button onclick="closeBetaBanner()">Got it!</button>
+    </div>
+
+    <script>
+        // Fonction pour afficher le bandeau
+        function showBetaBanner() {
+            document.getElementById('betaBanner').style.display = 'block';
+        }
+
+        // Fonction pour fermer le bandeau
+        function closeBetaBanner() {
+            document.getElementById('betaBanner').style.display = 'none';
+        }
+
+        // Afficher le bandeau après le chargement de la page
+        window.onload = function() {
+            showBetaBanner();
+        }
+    </script>
+</body>
+</html>

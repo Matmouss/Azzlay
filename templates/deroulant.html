@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Rules Menu</title>
+    <style>
+        body {
+            font-family: 'Didot', serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+    
+        }
+
+        .menu {
+            position: fixed;
+            top: 20%;
+            right: -450px; /* Commence en dehors de l'écran */
+            width: 400px;
+            height: 100%;
+            background-color: #ffffff;
+            color: #333;
+            transition: right 0.3s ease;
+            z-index: 1000; /* S'assure que le menu est au premier plan */
+            overflow-y: auto;
+            padding: 20px;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+            border-left: 2px solid #333;
+            border-radius: 20px;
+            height: 50%;
+        }
+
+        .menu h2 {
+            text-align: center;
+            text-decoration: underline;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu ul li {
+            padding: 10px 0;
+            text-align: left;
+            font-size: 18px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .menu ul li img {
+            display: block;
+            margin: 10px auto;
+            max-width: 10%;
+        }
+
+        .menu-button {
+            position: fixed;
+            top: 10%;
+            right: 3%;
+            padding: 15px 30px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 999; /* Doit être supérieur à celui du menu */
+            font-size: 18px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .menu-button:focus {
+            outline: none;
+        }
+
+        .close-button {
+            display: block;
+            margin: 20px auto 10px auto;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 1001; /* S'assure que le bouton est au premier plan */
+            text-align: center;
+            font-size: 18px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .close-button:focus {
+            outline: none;
+        }
+
+        /* Classes pour contrôler l'état du menu */
+        .menu.open {
+            right: 0.5%;
+        }
+    </style>
+</head>
+<body>
+    <div id="menu" class="menu">
+        <h2>Game Controls</h2>
+        <ul>
+            <li><strong>Movements:</strong> Arrow keys / WASD / ZQSD</li>
+            <li><strong>Place a piece:</strong> Enter key, choose with up and down then Enter to confirm the choice</li>
+            <li><strong>Previous move:</strong> If you made a mistake press space</li>
+            <li><strong>Restart:</strong> Press E or R</li>
+        </ul>
+        <h2>Basic Rules</h2>
+        <ul>
+            <li>If two pieces of the same type are next to each other, they <strong>combine</strong>.</li>
+            <li>Here is the order of combinations: Circle, Triangle, Square, Quantum</li>
+            <li>You may also notice that when 2 pieces combine, the combination happens where the <strong>last piece</strong> that moved was (between the 2)</li>
+            <li>To <strong>move a piece</strong> with the cursor, you must first go through a core: <img src="/static/images/core.png" alt="Core Image"></li>
+            <li>If the <strong>cursor</strong> looks like this: <img src="/static/images/strong.png" alt="Strong Cursor Image"> then the cursor can push a piece</li>
+            <li>The maximum number of moves is <strong>300</strong></li>
+        </ul>
+        <button id="closeMenuButton" class="close-button">Close</button>
+    </div>
+    <button id="menuButton" class="menu-button">Rules</button>
+
+    <script>
+        document.getElementById('menuButton').addEventListener('click', function() {
+            var menu = document.getElementById('menu');
+            if (menu.classList.contains('open')) {
+                menu.classList.remove('open');
+            } else {
+                menu.classList.add('open');
+            }
+        });
+
+        document.getElementById('closeMenuButton').addEventListener('click', function() {
+            var menu = document.getElementById('menu');
+            menu.classList.remove('open');
+        });
+    </script>
+</body>
+</html>

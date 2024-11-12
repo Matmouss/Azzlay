@@ -1,0 +1,587 @@
+[
+    {
+        "nb": 1,
+        "name": "The wall",
+        "extra text": "Welcome to 'The Wall'! Can you find your way through without hitting a brick?",
+        "size": [
+            5,
+            5
+        ],
+        "void cells": [
+            [
+                0,
+                2
+            ],
+            [
+                1,
+                2
+            ],
+            [
+                3,
+                2
+            ],
+            [
+                4,
+                2
+            ]
+        ],
+        "starting pieces": [
+            {
+                "type": "circle",
+                "position": [
+                    1,
+                    1
+                ]
+            },
+            {
+                "type": "circle",
+                "position": [
+                    3,
+                    1
+                ]
+            },
+            {
+                "type": "circle",
+                "position": [
+                    3,
+                    3
+                ]
+            }
+        ],
+        "initial inventory": {
+            "circle": 1
+        },
+        "available": null,
+        "cursor position": [
+            0,
+            0
+        ],
+        "cores positions": [
+            [
+                0,
+                0
+            ]
+        ],
+        "goals": [
+            {
+                "type": "cursorOnItem",
+                "description": "Cursor on the circle",
+                "parameters": {
+                    "item type": "dollar",
+                    "item position": [
+                        2,
+                        2
+                    ]
+                }
+            },
+            {
+                "type": "pieceOnItem",
+                "description": "Put a square on the cross",
+                "parameters": {
+                    "piece type": "square",
+                    "item type": "cross",
+                    "item position": [
+                        2,
+                        1
+                    ]
+                }
+            }
+        ],
+        "rules": [
+            {
+                "type": "deletePieceOnItem",
+                "description": "circle deletes triangles",
+                "parameters": {
+                    "item": "dollar",
+                    "position": [
+                        2,
+                        2
+                    ],
+                    "type": "triangle"
+                }
+            },
+            {
+                "type": "cursorStrength",
+                "description": "cursor is 3 times stronger",
+                "parameters": {
+                    "strength": 3
+                }
+            }
+        ],
+        "best_score": 15
+    },
+    {
+        "nb": 2,
+        "name": "out of space",
+        "extra text": "Uh-oh, looks like we're 'Out of Space'! Can you solve the puzzle without any extra room to maneuver?",
+        "size": [
+            2,
+            3
+        ],
+        "void cells": [],
+        "starting pieces": [
+            {
+                "type": "circle",
+                "position": [
+                    1,
+                    0
+                ]
+            },
+            {
+                "type": "square",
+                "position": [
+                    0,
+                    1
+                ]
+            },
+            {
+                "type": "triangle",
+                "position": [
+                    1,
+                    1
+                ]
+            }
+        ],
+        "initial inventory": {
+            "circle": 5
+        },
+        "available": null,
+        "cursor position": [
+            0,
+            0
+        ],
+        "cores positions": [],
+        "goals": [
+            {
+                "type": "NoPiecesOfType",
+                "parameters": {
+                    "type": "circle"
+                },
+                "description": "no circles"
+            },
+            {
+                "type": "NoPiecesOfType",
+                "parameters": {
+                    "type": "triangle"
+                },
+                "description": "no triangles"
+            },
+            {
+                "type": "EmptyInventory",
+                "parameters": {},
+                "description": "empty inventory !!"
+            }
+        ],
+        "rules": [
+            {
+                "type": "changePieceWhenTurn",
+                "parameters": {
+                    "turn": 2,
+                    "type": "circle",
+                    "upgrade": "square"
+                },
+                "description": "circles transformes in squares every 2 turns"
+            }
+        ],
+        "best_score": 10
+    },
+    {
+        "nb": 3,
+        "name": "labyrinth",
+        "extra text": "Lost in the 'Labyrinth'? Let's see if you can find your way out of this twisty maze!",
+        "size": [
+            6,
+            6
+        ],
+        "void cells": [
+            [
+                1,
+                2
+            ],
+            [
+                2,
+                2
+            ],
+            [
+                1,
+                4
+            ],
+            [
+                2,
+                4
+            ],
+            [
+                4,
+                2
+            ],
+            [
+                4,
+                4
+            ],
+            [
+                0,
+                0
+            ],
+            [
+                5,
+                0
+            ]
+        ],
+        "starting pieces": [
+            {
+                "type": "triangle",
+                "position": [
+                    2,
+                    3
+                ]
+            },
+            {
+                "type": "triangle",
+                "position": [
+                    5,
+                    4
+                ]
+            },
+            {
+                "type": "triangle",
+                "position": [
+                    1,
+                    5
+                ]
+            },
+            {
+                "type": "triangle",
+                "position": [
+                    4,
+                    1
+                ]
+            },
+            {
+                "type": "quantum",
+                "position": [
+                    2,
+                    0
+                ]
+            }
+        ],
+        "initial inventory": {},
+        "available": null,
+        "cursor position": [
+            3,
+            3
+        ],
+        "cores positions": [
+            [
+                3,
+                3
+            ]
+        ],
+        "goals": [
+            {
+                "type": "NbOfPiecesOfType",
+                "description": "only one circle",
+                "parameters": {
+                    "type": "circle",
+                    "number": 1
+                }
+            }
+        ],
+        "rules": [
+            {
+                "type": "modifyUpgrades",
+                "parameters": {
+                    "type": "quantum",
+                    "upgrade": "circle"
+                },
+                "description": "2 quantums transformes in 1 circle"
+            }
+        ],
+        "best_score": 198
+    },
+    {
+        "nb": 4,
+        "name": "timed",
+        "extra text": "Tick-tock! In 'Timed', every second counts. Can you beat the clock?",
+        "size": [
+            6,
+            6
+        ],
+        "void cells": [
+            [
+                0,
+                4
+            ],
+            [
+                1,
+                4
+            ],
+            [
+                2,
+                4
+            ],
+            [
+                2,
+                5
+            ],
+            [
+                2,
+                3
+            ],
+            [
+                3,
+                5
+            ],
+            [
+                4,
+                3
+            ],
+            [
+                5,
+                0
+            ],
+            [
+                5,
+                1
+            ],
+            [
+                5,
+                3
+            ],
+            [
+                5,
+                4
+            ],
+            [
+                5,
+                5
+            ]
+        ],
+        "starting pieces": [
+            {
+                "type": "circle",
+                "position": [
+                    0,
+                    5
+                ]
+            },
+            {
+                "type": "square",
+                "position": [
+                    1,
+                    5
+                ]
+            },
+            {
+                "type": "quantum",
+                "position": [
+                    4,
+                    5
+                ]
+            },
+            {
+                "type": "circle",
+                "position": [
+                    1,
+                    2
+                ]
+            },
+            {
+                "type": "triangle",
+                "position": [
+                    3,
+                    3
+                ]
+            },
+            {
+                "type": "triangle",
+                "position": [
+                    3,
+                    0
+                ]
+            },
+            {
+                "type": "square",
+                "position": [
+                    4,
+                    0
+                ]
+            },
+            {
+                "type": "quantum",
+                "position": [
+                    0,
+                    0
+                ]
+            },
+            {
+                "type": "square",
+                "position": [
+                    2,
+                    2
+                ]
+            },
+            {
+                "type": "circle",
+                "position": [
+                    5,
+                    2
+                ]
+            }
+        ],
+        "initial inventory": {
+            "circle": 1
+        },
+        "available": null,
+        "cursor position": [
+            0,
+            1
+        ],
+        "cores positions": [
+            [
+                1,
+                0
+            ],
+            [
+                3,
+                1
+            ],
+            [
+                1,
+                2
+            ]
+        ],
+        "goals": [
+            {
+                "type": "NoPiecesOfType",
+                "description": "No quantums",
+                "parameters": {
+                    "type": "quantum"
+                }
+            },
+            {
+                "type": "NbOfPiecesOfType",
+                "description": "3 squares.",
+                "parameters": {
+                    "type": "square",
+                    "number": 3
+                }
+            }
+        ],
+        "rules": [
+            {
+                "type": "changePieceWhenTurn",
+                "parameters": {
+                    "turn": 43,
+                    "type": "triangle",
+                    "upgrade": "square"
+                },
+                "description": "triangle transformes in squares at turn 43"
+            },
+            {
+                "type": "changePieceWhenTurn",
+                "parameters": {
+                    "turn": 27,
+                    "type": "triangle",
+                    "upgrade": "square"
+                },
+                "description": "triangle transformes in squares at turn 27"
+            },
+            {
+                "type": "changePieceWhenTurn",
+                "parameters": {
+                    "turn": 27,
+                    "type": "circle",
+                    "upgrade": "triangle"
+                },
+                "description": "circles transformes in triangles at turn 27"
+            }
+        ],
+        "best_score": 42
+    },
+    {
+        "nb": 5,
+        "name": "apple",
+        "extra text": "Welcome to 'Apple'! Can you solve this puzzle without taking a bite?",
+        "size": [
+            2,
+            3
+        ],
+        "void cells": [],
+        "starting pieces": [],
+        "initial inventory": {
+            "circle": 11
+        },
+        "available": null,
+        "cursor position": [
+            1,
+            1
+        ],
+        "cores positions": [],
+        "goals": [
+            {
+                "type": "NbOfPiecesOfType",
+                "description": "oOnly one quantum.",
+                "parameters": {
+                    "type": "quantum",
+                    "number": 1
+                }
+            },
+            {
+                "type": "EmptyInventory",
+                "parameters": {},
+                "description": "empty inventory !!"
+            },
+            {
+                "type": "cursorOnItem",
+                "description": "Cursor on the circle",
+                "parameters": {
+                    "item type": "dollar",
+                    "item position": [
+                        0,
+                        0
+                    ]
+                }
+            }
+        ],
+        "rules": [],
+        "best_score": 27
+    },
+    {
+        "nb": 6,
+        "name": "insane new level !!!!",
+        "extra text": "What an incredible one ...",
+        "size": [
+            5,
+            5
+        ],
+        "void cells": [
+            [
+                2,
+                2
+            ],
+            [
+                2,
+                3
+            ],
+            [
+                3,
+                2
+            ],
+            [
+                3,
+                3
+            ]
+        ],
+        "starting pieces": [],
+        "initial inventory": {},
+        "available": null,
+        "cursor position": [
+            1,
+            1
+        ],
+        "cores positions": [],
+        "goals": [],
+        "rules": [],
+        "best_score": 1
+    }
+]

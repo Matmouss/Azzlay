@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Background</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* S'assure que l'animation est en arrière-plan */
+            background: #000;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            animation: move 20s linear infinite;
+        }
+
+        @keyframes move {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+            100% {
+                transform: translateY(100vh) translateX(100vw);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="background-animation"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const numCircles = 50; // Nombre de cercles
+            const container = document.getElementById('background-animation');
+
+            for (let i = 0; i < numCircles; i++) {
+                const circle = document.createElement('div');
+                circle.classList.add('circle');
+                const size = Math.random() * 100;
+                circle.style.width = `${size}px`;
+                circle.style.height = `${size}px`;
+                circle.style.top = `${Math.random() * 100}vh`;
+                circle.style.left = `${Math.random() * 100}vw`;
+                circle.style.animationDuration = `${10 + Math.random() * 30}s`;
+                circle.style.background = `rgba(255, 255, 255, ${Math.random() * 0.5})`;
+                container.appendChild(circle);
+            }
+        });
+    </script>
+</body>
+</html>

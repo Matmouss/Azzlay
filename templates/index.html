@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azzlay - Home</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: 'Didot', serif;
+            background: linear-gradient(135deg, #f5f5f5 25%, #e0e0e0 100%);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            padding: 50px;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #555;
+            transform: translateY(-2px);
+        }
+
+        .logo {
+            width: 100px;
+            margin-bottom: 20px;
+            border-radius: 50px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 0.8em;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    {% include 'banner.html' %}
+    {% include 'animation1.html' %}
+    {% include 'beta.html' %}
+    <div class="container">
+        <img src="/static/images/azzlay_logo.webp" alt="Azzlay Logo" class="logo">
+        <h1>Welcome to Azzlay!</h1>
+        <p>The ultimate geometric puzzle game.</p>
+        <button onclick="window.location.href='/select'">Play Game</button>
+        <button onclick="window.location.href='/more'">Learn More</button>
+        <div class="footer">
+            &copy; 2024 Azzlay. All rights reserved.
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+</body>
+</html>
