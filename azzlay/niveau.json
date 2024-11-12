@@ -1,17 +1,29 @@
 {
-    "nb": 1731418847443,
-    "name": "Patate",
-    "extra text": "un super cool niveau trop bien",
+    "nb": 1731425318235,
+    "name": "premier test",
+    "extra text": "le premier test de création de niveau",
     "size": [
         5,
         6
     ],
     "void cells": [
         [
+            0,
             0
+        ],
+        [
+            0,
+            1
         ]
     ],
     "starting pieces": [
+        {
+            "type": null,
+            "position": [
+                1,
+                1
+            ]
+        },
         {
             "type": 0,
             "position": [
@@ -21,20 +33,26 @@
         }
     ],
     "initial inventory": {
-        "": null
+        "circle": 1
     },
     "cursor position": [
-        0
+        2,
+        2
     ],
     "cores positions": [
         [
-            0
+            3,
+            3
         ]
     ],
     "goals": [
         {
-            "type": "",
-            "parameters": {}
+            "type": "cursorOnItem",
+            "description": " Place the cursor on the circle",
+            "parameters": {
+                "item": "dollar",
+                "position": 3
+            }
         }
     ],
     "rules": [
