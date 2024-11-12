@@ -6,5 +6,9 @@
   {
     "name": "Puzzles beta",
     "path": "first_levels.json"
+  },
+  {
+    "name": "Test",
+    "path": "niveau.json"
   }
 ]

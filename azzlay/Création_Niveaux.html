@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Création de Niveaux</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 600px; margin: 20px auto; }
+        label { display: block; margin-top: 10px; }
+        input, select, textarea { width: 100%; padding: 8px; margin-top: 5px; }
+        button { margin-top: 15px; padding: 10px; }
+        .output { background-color: #f3f3f3; padding: 10px; margin-top: 20px; }
+        .guide { background-color: #e0f7fa; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
+        .guide h3 { margin-top: 0; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Création de Niveaux</h1>
+
+    <!-- Guide des types d'objectifs et de règles -->
+    <div class="guide">
+        <h3>Guide des Objectifs et Règles</h3>
+        
+        <h4>Objectifs</h4>
+        <ul>
+            <li><b>EmptyInventory</b>: Vérifie si l'inventaire est vide. <i>Paramètres</i>: Aucun `{}`</li>
+            <li><b>NoPiecesOfType</b>: Vérifie l'absence de pièces d'un type. <i>Paramètres</i>: `type`</li>
+            <li><b>NbOfPiecesOfType</b>: Vérifie un nombre précis de pièces d'un type. <i>Paramètres</i>: `type`, `number`</li>
+            <li><b>pieceOnItem</b>: Vérifie si une pièce est sur un type d'objet donné. <i>Paramètres</i>: `piece type`, `item type`, `item position`</li>
+            <li><b>cursorOnItem</b>: Vérifie si le curseur est sur un objet donné. <i>Paramètres</i>: `item type`, `item position`</li>
+            <li><b>ImpossibleChallenge</b>: Définit un objectif impossible. <i>Paramètres</i>: Aucun `{}`</li>
+        </ul>
+
+        <h4>Règles</h4>
+        <ul>
+            <li><b>cursorStrength</b>: Définit la force du curseur. <i>Paramètres</i>: `strength`</li>
+            <li><b>cursorSpeed</b>: Définit la vitesse du curseur. <i>Paramètres</i>: `speed`</li>
+            <li><b>modifyUpgrades</b>: Change une pièce en un autre type. <i>Paramètres</i>: `type`, `upgrade`</li>
+            <li><b>magneticField</b>: Déplace le curseur et les pièces dans une direction. <i>Paramètres</i>: `direction`, `strength`</li>
+            <li><b>changePieceWhenTurn</b>: Transforme une pièce tous les X tours. <i>Paramètres</i>: `turn`, `type`, `upgrade`</li>
+            <li><b>deletePieceOnItem</b>: Supprime une pièce d'un type donné sur un objet donné. <i>Paramètres</i>: `item`, `position`, `type`</li>
+        </ul>
+    </div>
+
+    <!-- Formulaire de création de niveau -->
+    <form id="levelForm">
+        <label>Nom du Niveau
+            <input type="text" id="name" required>
+        </label>
+        
+        <label>Description
+            <textarea id="extraText" required></textarea>
+        </label>
+        
+        <label>Taille du Niveau (largeur, hauteur)
+            <input type="text" id="size" placeholder="Ex: 5,5" required>
+        </label>
+        
+        <label>Cases Vides (position x, y; séparées par des points-virgules)
+            <textarea id="voidCells" placeholder="Ex: 0,2; 1,2; 3,2"></textarea>
+        </label>
+        
+        <label>Pièces de Départ (type, position x, y; séparées par des points-virgules)
+            <textarea id="startingPieces" placeholder="Ex: circle,1,1; square,2,2"></textarea>
+        </label>
+        
+        <label>Inventaire Initial (type: quantité; séparées par des virgules)
+            <input type="text" id="initialInventory" placeholder="Ex: circle:1, square:3">
+        </label>
+        
+        <label>Position Initiale du Curseur (x, y)
+            <input type="text" id="cursorPosition" placeholder="Ex: 0,0">
+        </label>
+        
+        <label>Positions des Cœurs (position x, y; séparées par des points-virgules)
+            <textarea id="coresPositions" placeholder="Ex: 1,1; 2,2"></textarea>
+        </label>
+        
+        <label>Objectifs (type, description, paramètres; chaque objectif sur une ligne)
+            <textarea id="goals" placeholder="Ex: cursorOnItem,Cursor on the circle,item type:dollar,item position:2,2"></textarea>
+        </label>
+        
+        <label>Règles (type, description, paramètres; chaque règle sur une ligne)
+            <textarea id="rules" placeholder="Ex: deletePieceOnItem,circle deletes triangles,item:dollar,position:2,2,type:triangle"></textarea>
+        </label>
+        
+        <label>Meilleur Score
+            <input type="number" id="bestScore" min="0">
+        </label>
+        
+        <button type="button" onclick="generateJSON()">Générer JSON</button>
+    </form>
+    
+    <div class="output" id="output">
+        <h2>JSON Généré</h2>
+        <pre id="jsonOutput"></pre>
+        <!-- Bouton de téléchargement -->
+        <button id="downloadBtn" style="display:none;" onclick="downloadJSON()">Télécharger JSON</button>
+    </div>
+</div>
+
+<script>
+    function parseTextToArray(text, separator = ';', subSeparator = ',') {
+        return text.trim().split(separator).map(item => item.trim().split(subSeparator).map(Number));
+    }
+
+    function parseInventory(text) {
+        const inventory = {};
+        text.split(',').forEach(item => {
+            const [type, qty] = item.split(':').map(x => x.trim());
+            inventory[type] = parseInt(qty);
+        });
+        return inventory;
+    }
+
+    function parseGoalsOrRules(text) {
+        return text.trim().split('\n').map(line => {
+            const [type, description, ...params] = line.split(',');
+            const parameters = {};
+            params.forEach(param => {
+                const [key, value] = param.split(':').map(x => x.trim());
+                parameters[key] = isNaN(value) ? value : parseFloat(value);
+            });
+            return { type, description, parameters };
+        });
+    }
+
+    function generateJSON() {
+        const level = {
+            nb: Date.now(),  // unique ID based on timestamp
+            name: document.getElementById("name").value,
+            "extra text": document.getElementById("extraText").value,
+            size: document.getElementById("size").value.split(',').map(Number),
+            "void cells": parseTextToArray(document.getElementById("voidCells").value),
+            "starting pieces": parseTextToArray(document.getElementById("startingPieces").value, ';').map(([type, x, y]) => ({ type, position: [x, y] })),
+            "initial inventory": parseInventory(document.getElementById("initialInventory").value),
+            "cursor position": document.getElementById("cursorPosition").value.split(',').map(Number),
+            "cores positions": parseTextToArray(document.getElementById("coresPositions").value),
+            "goals": parseGoalsOrRules(document.getElementById("goals").value),
+            "rules": parseGoalsOrRules(document.getElementById("rules").value),
+            "best_score": parseInt(document.getElementById("bestScore").value) || null
+        };
+
+        const jsonString = JSON.stringify(level, null, 4);
+        document.getElementById("jsonOutput").textContent = jsonString;
+
+        // Afficher le bouton de téléchargement
+        document.getElementById("downloadBtn").style.display = 'block';
+    }
+
+    function downloadJSON() {
+        const jsonString = document.getElementById("jsonOutput").textContent;
+        const blob = new Blob([jsonString], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "niveau.json";
+        document.body.appendChild(a);
+        a.click();
+        
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{
+    "nb": 1731418847443,
+    "name": "Patate",
+    "extra text": "un super cool niveau trop bien",
+    "size": [
+        5,
+        5
+    ],
+    "void cells": [
+        [
+            0
+        ]
+    ],
+    "starting pieces": [
+        {
+            "type": 0,
+            "position": [
+                null,
+                null
+            ]
+        }
+    ],
+    "initial inventory": {
+        "": null
+    },
+    "cursor position": [
+        0
+    ],
+    "cores positions": [
+        [
+            0
+        ]
+    ],
+    "goals": [
+        {
+            "type": "",
+            "parameters": {}
+        }
+    ],
+    "rules": [
+        {
+            "type": "",
+            "parameters": {}
+        }
+    ],
+    "best_score": null
+}
