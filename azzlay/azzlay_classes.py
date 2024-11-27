@@ -356,15 +356,16 @@ class cursor:
             do_we_move = False    
         
         if do_we_move:
-            who_is_here = pieces_tracker.whoIsHere(destination)
             if puzzle.Rules_Tracker.checkRules(puzzle, "moving cursor", direction):
                 return True
-            elif who_is_here == "nobody":
+            who_is_here = pieces_tracker.whoIsHere(destination)
+            if who_is_here == "nobody":
                 # Move cursor
                 self.position = destination
                 for core in cores_positions:
                     if self.position == core:
                         self.changeStatus("strong")
+                puzzle.Rules_Tracker.checkRules(puzzle, "moved cursor", direction)
                 return True
             else:
                 # Move piece then move cursor if its status is set to strong
@@ -375,5 +376,6 @@ class cursor:
                         for core in cores_positions:
                             if self.position == core:
                                 self.changeStatus("strong")
+                        puzzle.Rules_Tracker.checkRules(puzzle, "moved cursor", direction)
                         return True
             return False

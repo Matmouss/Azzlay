@@ -4,6 +4,17 @@
 #different states : "start game", "upgrade","moving cursor","moving piece", "end turn"
 from . import azzlay_common_functions
 
+"""
+
+bien utiliser les préfixes suivants:
+
+item type
+item position
+
+pour que les items puissent s'initier correctement
+
+"""
+
 class rules:
     def __init__(self, description, initial_parameters, status = ""):
         self.description = description
@@ -97,12 +108,46 @@ class deletePieceOnItem(rules):
             if piece["position"] == self.parameters["position"] and piece["type"] == self.parameters["type"]:
                 puzzle.pieces_tracker.delPiece(piece)
 
+
+class movePieceWhenMove(rules):
+    #parameters {"type"}
+    def __init__(self, description, initial_parameters, status = "moved cursor"):
+        super().__init__(description, initial_parameters, status)
+
+    def applyRule(self, puzzle, status, specifique_parameter):
+        for piece in puzzle.pieces_tracker.pieces:
+            if piece["type"] == self.parameters["type"]:
+                do = True
+                for item in puzzle.pieces_tracker.piece_moved:
+                    if piece["position"] == item["position"]:
+                        do = False
+                if do:
+                    puzzle.pieces_tracker.movePiece(piece,puzzle.grid_template.full_grid,specifique_parameter)
+        return False
+
+class itemMovesPieces(rules):
+    #parameters {"item type", "item position", "dir"}
+    def __init__(self, description, initial_parameters, status="end turn"):
+        super().__init__(description, initial_parameters, status)
+
+    def applyRule(self, puzzle, status, specifique_parameter):
+        ret = False
+        for piece in puzzle.pieces_tracker.pieces:
+            if piece["position"] == self.parameters["item position"]:
+                ret = True
+                puzzle.pieces_tracker.movePiece(piece,puzzle.grid_template.full_grid, self.parameters["dir"])
+        return ret
+
+
 rule_type_mapping = {
     "modifyUpgrades": modifyUpgrades,
     "cursorStrength": cursorStrength,
     "cursorSpeed": cursorSpeed,
     "magneticField": magneticField,
     "changePieceWhenTurn": changePieceWhenTurn,
-    "deletePieceOnItem": deletePieceOnItem
+    "deletePieceOnItem": deletePieceOnItem,
+    "movePieceWhenMove": movePieceWhenMove,
+    "itemMovesPieces":itemMovesPieces
+
     #others mappings
 }

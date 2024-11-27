@@ -548,40 +548,116 @@
     },
     {
         "nb": 6,
-        "name": "insane new level !!!!",
-        "extra text": "What an incredible one ...",
+        "name": "debug",
+        "extra text": "essai des deux nouvelles règles",
         "size": [
-            5,
+            3,
             5
         ],
         "void cells": [
             [
                 2,
-                2
-            ],
-            [
-                2,
-                3
-            ],
-            [
-                3,
-                2
-            ],
-            [
-                3,
-                3
+                1
             ]
         ],
-        "starting pieces": [],
-        "initial inventory": {},
-        "available": null,
+        "starting pieces": [
+            {
+                "type": "triangle",
+                "position": [
+                    4,
+                    0
+                ]
+            },
+            {
+                "type": "triangle",
+                "position": [
+                    2,
+                    2
+                ]
+            },
+            {
+                "type": "quantum",
+                "position": [
+                    1,
+                    1
+                ]
+            }
+        ],
+        "initial inventory": {
+            "circle": 0
+        },
         "cursor position": [
             1,
-            1
+            0
         ],
-        "cores positions": [],
-        "goals": [],
-        "rules": [],
-        "best_score": 1
+        "cores positions": [
+            [
+                0,
+                1
+            ]
+        ],
+        "goals": [
+            {
+                "type": "pieceOnItem",
+                "description": " Quantum on cross",
+                "parameters": {
+                    "piece type": "quantum",
+                    "item type": "cross",
+                    "item position": [
+                        4,
+                        0
+                    ]
+                }
+            }
+        ],
+        "rules": [
+            {
+                "type": "itemMovesPieces",
+                "description": " circle moves pieces",
+                "parameters": {
+                    "item type": "dollar",
+                    "item position": [
+                        4,
+                        2
+                    ],
+                    "dir": "left"
+                }
+            },
+            {
+                "type": "movePieceWhenMove",
+                "description": " les carré suivent le mouvement",
+                "parameters": {
+                    "type": "square"
+                }
+            },
+            {
+                "type": "cursorStrength",
+                "description": " force = 2",
+                "parameters": {
+                    "strength": 2
+                }
+            },
+            {
+                "type": "modifyUpgrades",
+                "description": " 2 square > 1 square",
+                "parameters": {
+                    "type": "square",
+                    "upgrade": "square"
+                }
+            },
+            {
+                "type": "itemMovesPieces",
+                "description": "",
+                "parameters": {
+                    "item type": "dollar",
+                    "item position": [
+                        3,
+                        2
+                    ],
+                    "dir": "down"
+                }
+            }
+        ],
+        "best_score": null
     }
 ]

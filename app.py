@@ -121,8 +121,8 @@ def handle_game_action(data):
                             game.previous_state.previous_state.previous_state = None
                     
                         # Apply upgrades, rules and check goals after each move
-                        game.pieces_tracker.checkUpgrades(game.grid_template.full_grid, game)
                         game.Rules_Tracker.checkRules(game, "end turn", None)
+                        game.pieces_tracker.checkUpgrades(game.grid_template.full_grid, game)
                         game.Goals_Tracker.checkGoals(game)
                         
                         if game.Goals_Tracker.isWinner():
@@ -173,8 +173,8 @@ def handle_selected_piece(data):
                 if game.nb_of_moves>2 and game.previous_state.previous_state.previous_state != None:
                     game.previous_state.previous_state.previous_state = None
 
-                game.pieces_tracker.checkUpgrades(game.grid_template.full_grid, game)
                 game.Rules_Tracker.checkRules(game, "end turn", None)
+                game.pieces_tracker.checkUpgrades(game.grid_template.full_grid, game)
                 game.Goals_Tracker.checkGoals(game)
             
             if game.Goals_Tracker.isWinner():
