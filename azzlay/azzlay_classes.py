@@ -78,9 +78,9 @@ class Game:
             if rule_class:
                 rule_instance = rule_class(rule_data["description"], rule_data["parameters"])
                 if "secret" in rule_data: 
-                    secret = rule_data["secret"] # nosec B105
-                    if secret == "True": # nosec B105
-                        rule_instance.secret = True # nosec B105
+                    secret = rule_data["secret"]
+                    if secret == "True": 
+                        rule_instance.secret = True
                 self.list_of_rules.append(rule_instance)
                 
     def createDisplayGrid(self):
@@ -118,7 +118,7 @@ class Game:
         return False
 
     def checkBest(self):
-        if self.best_score == "NA" or self.nb_of_moves < self.best_score:
+        if self.best_score == "NA":
             self.best_score = self.nb_of_moves
             with open(self.file_path, 'r') as file:
                 data = json.load(file)
@@ -153,6 +153,8 @@ class pieces_tracker:
 
     def delPiece(self, piece):
         self.pieces.remove(piece)
+        #if piece in self.piece_moved:
+        #   self.piece_moved.remove(piece)
         self.count[piece["type"]] -= 1
 
     def whoIsHere(self, position):
@@ -180,13 +182,13 @@ class pieces_tracker:
         if whats_here == "nobody":
             whats_here = azzlay_common_functions.whatIsInCell(destination, template_grid)
             if whats_here == "":
-                self.addPiece({"type": piece["type"], "position": destination})
                 self.delPiece(piece)
+                self.addPiece({"type": piece["type"], "position": destination})
                 wasmoved = True
         else:
             if self.movePiece(self.whoIsHere(destination), template_grid, direction):
-                self.addPiece({"type": piece["type"], "position": destination})
                 self.delPiece(piece)
+                self.addPiece({"type": piece["type"], "position": destination})
                 wasmoved = True
         return wasmoved
 
@@ -200,8 +202,6 @@ class pieces_tracker:
                         if item["type"] == piece["type"]:
                             self.delPiece(item)
                             self.delPiece(piece)
-                            if item in self.piece_moved:
-                                self.piece_moved.remove(item)
                             self.addPiece({"type": upgrade_table[piece["type"]], "position": piece["position"]})
                             break
                         elif item["type"] == "quantum":
@@ -298,19 +298,30 @@ class Rules_Tracker:
             if item.secret:
                 descriptions.append("not revealed yet")
             else:
-                descriptions.append(item.description)               
+                if not item == "":
+                    descriptions.append(item.description)               
         if len(descriptions) == 0:
-            descriptions = ["No additional rules"]
+            descriptions = ["normal rules"]
         return descriptions
             
     def checkRules(self, current_game, status, specific_parameter):
         # Check the rules corresponding to the current state 
         replace_action = False
-        for i in range(len(self.status)):
-            if status in self.status[i]:
-                if self.rules[i].applyRule(current_game, status, specific_parameter): 
-                    replace_action = True
-        return replace_action
+        if status == "end turn":
+            appliquer = True
+            while appliquer:
+                appliquer = False
+                for i in range(len(self.status)):
+                    if status in self.status[i]:
+                        if self.rules[i].applyRule(current_game, status, specific_parameter): 
+                            appliquer = True
+            return False
+        else:
+            for i in range(len(self.status)):   
+                if status in self.status[i]:
+                    if self.rules[i].applyRule(current_game, status, specific_parameter): 
+                        replace_action = True
+            return replace_action
 
 
 class inventory:

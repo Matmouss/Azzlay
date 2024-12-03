@@ -82,6 +82,7 @@ class magneticField(rules):
                     puzzle.pieces_tracker.movePiece(piece, puzzle.grid_template.full_grid, self.parameters["direction"])
                 puzzle.cursor.moveCursor(puzzle.grid_template.full_grid, puzzle.pieces_tracker, self.parameters["direction"], puzzle.cores, puzzle)
                 puzzle.pieces_tracker.checkUpgrades(puzzle.grid_template.full_grid, puzzle)
+        return False
 
 class changePieceWhenTurn(rules):
     #parameters {"turn", "type", "upgrade"}
@@ -96,7 +97,8 @@ class changePieceWhenTurn(rules):
                     puzzle.pieces_tracker.addPiece({"type": self.parameters["upgrade"], "position": piece["position"]})
                     self.applyRule(puzzle, status, specifique_parameter)
                     break
-        puzzle.pieces_tracker.checkUpgrades(puzzle.grid_template.full_grid, puzzle)
+        return False
+
 
 class deletePieceOnItem(rules):
     #parameters {"item", "position", "type"}
@@ -107,7 +109,7 @@ class deletePieceOnItem(rules):
         for piece in puzzle.pieces_tracker.pieces:
             if piece["position"] == self.parameters["position"] and piece["type"] == self.parameters["type"]:
                 puzzle.pieces_tracker.delPiece(piece)
-
+        return False
 
 class movePieceWhenMove(rules):
     #parameters {"type"}
@@ -137,7 +139,7 @@ class itemMovesPieces(rules):
                 ret = True
                 puzzle.pieces_tracker.movePiece(piece,puzzle.grid_template.full_grid, self.parameters["dir"])
         return ret
-
+        
 
 rule_type_mapping = {
     "modifyUpgrades": modifyUpgrades,
