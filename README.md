@@ -1,8 +1,17 @@
 # Azzlay
-# Un projet personnel de jeu web simple. 
 
-Le jeu tourne entièrement dans le back end.
+## Un projet personnel de jeu web simple
 
-Possible d'ajouter des règles et des objectifs de jeu mais risque de problèmes au niveau de la compatibilité avec le code général.
+Azzlay est un jeu web presque entièrement basé sur le backend.
+
+### 🚀 Lancement du jeu
+Pour démarrer Azzlay, il vous suffit d'exécuter le fichier **.exe** fourni.
+
+### 🛠️ Personnalisation
+Il est possible d'ajouter des **règles personnalisées** et des **objectifs de jeu**. Cependant, ces modifications peuvent entraîner des problèmes de compatibilité avec l'architecture générale du code. Car il ne s'agit pas d'une version finale stable du projet.
+
+### 📌 Remarque
+Ce projet est un travail personnel toute suggestion ou retour est le bienvenu !
+
 
 
